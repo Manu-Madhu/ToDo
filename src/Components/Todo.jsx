@@ -4,16 +4,28 @@ import AddTask from "./AddTask";
 import List from "./List";
 
 const Todo = () => {
+
     const [task, setTask] = useState([]);
 
-    const addTask =(title)=>{
-        const newTask = [...task, {title}]
-        setTask(newTask);
-    }
+    const addTask = (title) => {
+      const newTask = { title, status: false };
+      setTask((prevTasks) => [...prevTasks, newTask]); 
+    };
+  
     const removeTask =(index)=>{
       const newTask =[...task]
       newTask.splice(index,1);
       setTask(newTask)
+    }
+
+    const toggleComplete = (index) => {
+      const newTasks = [...task];
+      newTasks[index].status = !newTasks[index].status;
+      setTask(newTasks);
+    };
+
+    const clearTask =()=>{
+      setTask([]);
     }
   return (
     <div className="container-fluid">
@@ -29,7 +41,7 @@ const Todo = () => {
                 {
                     task.map((task,index)=>{
                         return(
-                            <List task={task} index ={index} removeTask={removeTask}/>
+                            <List task={task} index ={index}  removeTask={removeTask}  toggleComplete={toggleComplete}/>
                         );
                     })
                 }
@@ -40,7 +52,7 @@ const Todo = () => {
             </div>
             <img src={require(`./Assets/wallpaperflare.com_wallpaper (22).jpg`)}alt="" className="img-fluid"style={{ width: "100%", height: "", borderRadius: "10px" }} />
             <div className="container position-absolute bottom-0 mb-5 w-100">
-              <AddTask addTask={addTask}/>
+              <AddTask addTask={addTask} clearTask={clearTask}/>
             </div>
           </div>
         </div>

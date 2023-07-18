@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./Todo.css";
-const AddTask = ({addTask}) => {
+const AddTask = ({addTask,clearTask}) => {
 
     const [value,setValue]= useState('');
     
     const addItem =()=>{
-        addTask(value);
-        setValue("");
+      if(value){
+        addTask(value)
+      }
+      setValue("");
     }
   return (
     <>
@@ -23,7 +25,7 @@ const AddTask = ({addTask}) => {
               background: "#373a47",
               borderRadius: "5px",
               height: "43px",
-              width: "85%",
+              width: "75%",
               outline: "none",
             }}
             onChange={(e)=>{setValue(e.target.value)}}
@@ -31,6 +33,9 @@ const AddTask = ({addTask}) => {
           />
           <button onClick={addItem} className="btn btn-primary ms-3 p-2 text-white px-3">
             <span>Add</span>
+          </button>
+          <button onClick={clearTask} className="btn btn-primary ms-3 p-2 text-white px-3">
+            <span>Clear</span>
           </button>
         </div>
       </div>
